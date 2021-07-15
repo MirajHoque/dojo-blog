@@ -1,35 +1,38 @@
 <template>
   <div class="home">
-    home
-    <p >My name is {{ name }} and my age is {{ age }}</p>
-    <button @click="handleClick">Click Me</button>
-    <input type="text" v-model="name">
-    <button v-on:click="age++">add 1 to age</button>
+    <h1>Home</h1>
+    <h2>Refs</h2>
+    <p >{{ ninjaOne.name }} - {{ ninjaOne.age }}</p>
+    <button @click="updateNinjaOne">update ninja one</button>
+    <h2>Ninja Two</h2>
+    <p>{{ ninjaTwo.name }} - {{ ninjaTwo.age }}</p>
+    <button @click="updateNinjaTwo">update ninja two</button>
   </div>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity';
+import { reactive, ref } from '@vue/reactivity';
 
 export default {
   name: 'Home',
   setup() {
   
-    //const p= ref('hello');
+    const ninjaOne = ref({ name: 'mario', age: 30});
+    const ninjaTwo = reactive( { name: 'luigi', age: 35})
 
-    let name = ref('mario');
-    let age = ref(30);
+    const nameOne = ref('mario')
+    const nameTwo = reactive('luigi') // ref can't hold primitives values
+   
+   const updateNinjaOne = ()=> {
+      ninjaOne.value.age = 40;
+    }
 
-     const handleClick= ()=> {
-       name.value = 'luigi';
-       age.value = 35;
-    } 
+    const updateNinjaTwo = ()=> {
+      ninjaTwo.age = 45;
+    }
 
-    //return { name: name, age: age};
-    //if name of key and name of the variable assigning that  are same we shorthand this
-    //return { name, age}
 
-    return{ name, age, handleClick,}
+    return{ ninjaOne, updateNinjaOne, ninjaTwo, updateNinjaTwo, nameTwo};
 
    
   },
